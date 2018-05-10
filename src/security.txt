@@ -1,0 +1,14 @@
+# Found vulnerabilities? Contact our security team
+Contact: mailto:security@bigbank.eu
+
+# Our PGP key for encrypted e-mail
+Encryption: https://raw.githubusercontent.com/bigbank-as/security-txt/master/pgp-key.txt
+
+# Our policy on finding and reporting security vulnerabilities
+Policy: https://github.com/bigbank-as/security-txt/master/security-policy.md
+
+# Verify this security.txt file
+Signature: https://raw.githubusercontent.com/bigbank-as/security-txt/master/security.txt.sig
+
+# Want to help?
+Hiring: https://jobs.bigbank.eu
