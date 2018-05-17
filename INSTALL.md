@@ -25,22 +25,27 @@ oc new-project security-txt
 ```bash
 oc new-app --docker-image=<image-path>
 ```
-- Create a new secure Route with Edge termination (add certificates). Important: the `Name` of the route needs to be `txt-webserver`
+- Create a new Route, no TLS termination. Name it `txt-webserver`. The Route needs
+  to be exposed on the *public* router(s), where custom request backend mapping is being done
 - Change to the `default` project, where OS3 Routers are deployed
+- Find out the full name of the `security-txt:txt-webserver` backend: open a terminal in the Router
+  pod and run `cat haproxy.config | grep security-txt`
 - We will modify our custom `haproxy-config.template` file: open `Resources -> Config Maps` and
   edit the Config Map that stores the router config
 - Add the following instructions to `frontend public`, after all the generic options and `http -> https` redirect block,
-  but before any `use_backend` instructions:
+  but before any `use_backend` instructions. Enter the correct full name (from haproxy.config) of the backend to use
 ```
   # If a request to securitytxt.org related files comes in, redirect it to a special backend,
   # regardless of the domain / Route it came from.
   # A backend with that name (project "security-txt" route "txt-webserver") must exist!
   acl is_security_txt path /.well-known/security.txt /security.txt
-  use_backend be_edge_http:security-txt:txt-webserver if is_security_txt
+  use_backend be_http:security-txt:txt-webserver if is_security_txt
 ```
 - Also add the above `acl` and `use_backend` instructions to `frontend fe_sni`, after generic options, but before any `use_backend` options
 - Redeploy the Router to apply the new config
-- Test: Try to open any Route that is exposed on the public Router: does `security.txt` open? Does the page itself still load OK?
+- Test: Try to open any Route that is exposed on the Router:does the page still load OK (we didn't break anything).
+  Now, open URI `.well-known/security.txt` and `security.txt` of the same domain - we should be served with the
+  contents of the `security.txt` file, not HTTP 404.
 
 ### Risks
 
@@ -66,5 +71,9 @@ added `use_backend` instructions, until such a backend can be re-created.
 
 If the cluster operator does not include this modification when HAProxy config is upgraded/switched out, `security.txt` will
 no longer be exposed by sites. Mitigation for this is automated monitoring.
+
+#### security.txt Webserver Down
+
+Needs testing: what happens, if the the healthy pod count of `security.txt` webserver is 0?
 
 [custom-router]: https://docs.openshift.com/container-platform/3.7/install_config/router/customized_haproxy_router.html
