@@ -3,7 +3,8 @@
 A public policy document for Bigbank AS, which describes contact information and guidelines for
 responsible disclosure and research of security vulnerabilities.
 
-See [securitytxt.org][].
+Bigbank AS Responsible Disclosure Policy is linked from our public web properties
+using the [securitytxt.org][] standard. Example: [jobs.bigbank.eu/.well-known/security.txt][].
 
 ## Why is this important?
 
@@ -57,3 +58,4 @@ The policy is versioned and can change without notice. Change history can be [se
 [nasa-mistakes]: https://www.itworld.com/article/2823083/enterprise-software/88716-8-famous-software-bugs-in-space.html#slide2
 [hungarian-hacker]: https://techcrunch.com/2017/07/25/hungarian-hacker-arrested-for-pressing-f12
 [change-history]: https://github.com/bigbank-as/security-txt/commits/master/src/security-policy.md
+[jobs.bigbank.eu/.well-known/security.txt]: https://jobs.bigbank.eu/.well-known/security.txt
