@@ -6,3 +6,5 @@ Signature: https://raw.githubusercontent.com/bigbank-as/security-txt/master/src/
 
 # Want to help?
 Hiring: https://jobs.bigbank.eu
+
+Contact: mailto:security@bigbank.eu
